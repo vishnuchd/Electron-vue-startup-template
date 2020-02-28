@@ -17,7 +17,10 @@
             internal configurations, using the project structure, building your application,
             and so much more.
           </p>
-          <button @click="open('https://simulatedgreg.gitbooks.io/electron-vue/content/')">Read the Docs</button><br><br>
+          <button @click="open('https://simulatedgreg.gitbooks.io/electron-vue/content/')">Read the Docs</button>
+          <br><br>
+          <button @click="download">Download</button>
+          <br><br>
         </div>
         <div class="doc">
           <div class="title alt">Other Documentation</div>
@@ -31,13 +34,26 @@
 
 <script>
   import SystemInformation from './LandingPage/SystemInformation'
+  import DownloadManager from '../DownloadM'
 
   export default {
     name: 'landing-page',
     components: { SystemInformation },
     methods: {
-      open (link) {
+      open(link) {
         this.$electron.shell.openExternal(link)
+      },
+      download() {
+        DownloadManager.download({
+          url: "https://i.imgur.com/H124sSq.jpg"
+        }, function (error, info) {
+          if (error) {
+            console.log(error);
+            return;
+          }
+
+          console.log("DONE: " + info.url);
+        });
       }
     }
   }
